@@ -225,7 +225,8 @@ function xmlescape(s)
 	return s.replace(/&/g, "&amp;")
 	        .replace(/</g, "&lt;")
 	        .replace(/>/g, "&gt;")
-	        .replace(/\"/g, "&quot;");
+	        .replace(/\"/g, "&quot;")
+	        .replace(/\'/g, "&apos;");
 }
 
 /** StanzaBuilder: Helps create and manipulate XML snippets **/
