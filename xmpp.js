@@ -44,7 +44,9 @@ xmpp.Stream = function (callbacks)
 	{
 		cb.onStartElementNS(function (tagname, attr_arr, prefix, uri, namespaces)
 		{
-			var attr = {xmlns:uri};
+			var attr = {};
+			if(uri != xmpp.xmlns.component_accept)
+				attr.xmlns = uri;
 			for(var i=0;i<attr_arr.length;i++)
 				attr[attr_arr[i][0]] = attr_arr[i][1];
 			for(var i=0;i<namespaces.length;i++)
@@ -185,7 +187,7 @@ exports.Connection.prototype = {
 	
 	_handle_stanza: function (stanza)
 	{
-		if(stanza.attr.xmlns == xmpp.xmlns.component_accept)
+		if(!stanza.attr.xmlns) // Default namespace
 		{
 			if(stanza.name == "handshake")
 			{
