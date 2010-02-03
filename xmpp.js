@@ -296,6 +296,17 @@ xmpp.StanzaBuilder.prototype = {
 			buf.push("</" + this.name + ">");
 		}
 		return buf.join("");
+	},
+	
+	getChild: function (name, xmlns) {
+		for(var i=0;i<this.tags.length;i++)
+		{
+			var child = this.tags[i];
+			if((!name || child.name == name) && (!xmlns || child.attr.xmlns == xmlns))
+				return child;
+		}
+		return null;
+	},
 	}
 }
 
