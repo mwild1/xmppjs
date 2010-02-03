@@ -149,6 +149,20 @@ exports.Connection.prototype = {
 		this.socket.send(data.toString());
 	},
 	
+	sendIQ: function (iq, on_result, on_error)
+	{
+		if(!iq.attr.id)
+			iq.attr.id = this.getUniqueId();
+		this.addHandler(function (reply) {
+			if(reply.attr.type == "result")
+				return on_result(reply);
+			elseif(on_error)
+				return on_error(reply);
+			return false;
+			
+		}, null, "iq", null, iq.attr.id);
+		this.send(iq);
+	},
 	
 	addHandler: function (handler, ns, name, type, id, from, options)
 	{
