@@ -118,6 +118,8 @@ xmpp.Connection = function (host, port)
 		closed: recontext(this, this._stream_closed)
 	});
 	
+	this._uniqueId = 0;
+	
 	return this;
 };
 
@@ -143,6 +145,12 @@ exports.Connection.prototype = {
 	{
 		this.debug("SND: "+data);
 		this.socket.send(data.toString());
+	},
+	
+	
+	getUniqueId: function (suffix)
+	{
+		return ++this._uniqueId + (suffix?(":"+suffix):"");
 	},
 	
 	// Update the status of the connection, call connect_callback
