@@ -135,6 +135,8 @@ exports.Connection.prototype = {
 		this.socket.addListener("disconnect", recontext(this, conn._socket_disconnected));
 		this.socket.addListener("receive", recontext(this, conn._socket_received));
 		
+		this.handlers = [];
+		
 		// Connect TCP socket
 		this.socket.connect(this.port, this.host);
 	
@@ -147,6 +149,18 @@ exports.Connection.prototype = {
 		this.socket.send(data.toString());
 	},
 	
+	
+	addHandler: function (handler, ns, name, type, id, from, options)
+	{
+		return this.handlers.push({
+			callback: handler,
+			xmlns: ns,
+			name: name,
+			type: type,
+			id: id,
+			from: from,
+			matchBare: options && options.matchBare});
+	},
 	
 	getUniqueId: function (suffix)
 	{
