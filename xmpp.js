@@ -217,6 +217,31 @@ exports.Connection.prototype = {
 			}
 		}
 		this.debug("STANZA: "+stanza.toString());
+		
+		// Match and call handlers
+		var removeHandlers = [];
+		for(var i=0;i<this.handlers.length;i++)
+		{
+			var handler = this.handlers[i];
+			if(
+				(!handler.name || handler.name == stanza.name) &&
+				(!handler.xmlns || (handler.xmlns == stanza.attr.xmlns
+					|| (stanza.tags[0] && handler.xmlns == stanza.tags[0].attr.xmlns))) &&
+				(!handler.type || handler.type == stanza.attr.type) &&
+				(!handler.id || handler.id == stanza.attr.id) &&
+				(!handler.from || (handler.from == (handler.matchBare?xmpp.getBareJID(stanza.attr.from):stanza.attr.from))) &&
+				(!handler.to || (handler.to == (handler.matchBare?xmpp.getBareJID(stanza.attr.to):stanza.attr.to)))
+			)
+			{
+				var ret = handler.callback(stanza);
+				if(ret == false)
+					removeHandlers.push(i);
+			}
+		}
+		
+		var adjust = 0;
+		for(var i=0;i<removeHandlers.length;i++)
+			this.handlers.splice(removeHandlers[i]-(adjust++), 1);
 	},
 	
 	_stream_closed: function ()
