@@ -307,6 +307,13 @@ xmpp.StanzaBuilder.prototype = {
 		}
 		return null;
 	},
+	
+	getText: function () {
+		var buf = [];
+		for(var i=0;i<this.children.length;i++)
+			if(typeof(this.children[i]) == "string")
+				buf.push(this.children[i]);
+		return buf.join("");
 	}
 }
 
