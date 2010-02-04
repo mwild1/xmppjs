@@ -377,6 +377,10 @@ xmpp.StanzaBuilder.prototype = {
 			if(typeof(this.children[i]) == "string")
 				buf.push(this.children[i]);
 		return buf.join("");
+	},
+	
+	getAttribute: function (name) {
+		return this.attr[name] || null;
 	}
 }
 
