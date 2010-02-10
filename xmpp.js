@@ -1,3 +1,8 @@
+// xmpp.js - Server-side XMPP in Javascript
+// (C) 2010 Matthew Wild
+// This project is released under the MIT/X11
+// license. For more info see the COPYING file.
+
 // Node libs
 var tcp = require("tcp");
 
