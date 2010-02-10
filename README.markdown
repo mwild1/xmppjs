@@ -26,9 +26,11 @@ component's domain, allowing you to send stanzas on behalf of any user on the se
 
 ### Getting started
 Firstly, you'll need Node installed if you haven't it already, this is fairly straightforward -
-*[instructions are here](#)*.
+[instructions are here](http://nodejs.org/#build).
 
-Check out the source xmpp.js code, from either the *Mercurial repository* or *Github project*.
+Check out the source xmpp.js code, from either the
+[Mercurial repository](http://code.matthewwild.co.uk/xmppjs/) or
+[Github project](http://github.com/mwild1/xmppjs).
 
 In the examples directory you will find an example component which echoes messages it receives
 back to the sender. If you have a local [Prosody](http://prosody.im/) server installed then you
