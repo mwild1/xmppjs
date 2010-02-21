@@ -18,7 +18,8 @@ var recontext = function (context, f) { return function () { return f.apply(cont
 
 xmpp.xmlns = {
 	streams: "http://etherx.jabber.org/streams",
-	component_accept: "jabber:component:accept"
+	component_accept: "jabber:component:accept",
+    chatstates: "http://jabber.org/protocol/chatstates"
 };
 
 xmpp.Status = {
@@ -61,6 +62,7 @@ xmpp.Stream = function (callbacks)
 			{
 				if(stream.opened)
 					stanza = xmpp.stanza(tagname, attr);
+                /* else if(tagname == "stream") */
 				else if(tagname == "stream" && uri == xmpp.xmlns.streams)
 				{
 					stream.opened = true;
@@ -115,7 +117,8 @@ xmpp.Connection = function (host, port)
 	this.host = host || "localhost";
 	this.port = port || 5347;
 	
-	this.socket = tcp.createConnection();
+	/** this.socket = tcp.createConnection();
+    this.socket.close() **/
 	
 	this.stream = new xmpp.Stream({
 		opened: recontext(this, this._stream_opened),
@@ -136,14 +139,15 @@ exports.Connection.prototype = {
 		this.connect_callback = callback;
 		
 		var conn = this;
+        this.socket = tcp.createConnection(this.port, this.host)
 		this.socket.addListener("connect", recontext(this, conn._socket_connected));
 		this.socket.addListener("disconnect", recontext(this, conn._socket_disconnected));
-		this.socket.addListener("receive", recontext(this, conn._socket_received));
+		this.socket.addListener("data", recontext(this, conn._socket_received));
 		
 		this.handlers = [];
 		
 		// Connect TCP socket
-		this.socket.connect(this.port, this.host);
+		// this.socket.connect(this.port, this.host);
 	
 		this._setStatus(xmpp.Status.CONNECTING);
 	},
@@ -151,7 +155,7 @@ exports.Connection.prototype = {
 	send: function (data)
 	{
 		this.debug("SND: "+data);
-		this.socket.send(data.toString());
+		this.socket.write(data.toString());
 	},
 	
 	sendIQ: function (iq, on_result, on_error)
@@ -223,6 +227,7 @@ exports.Connection.prototype = {
 		this._setStatus(xmpp.Status.AUTHENTICATING);
 		var handshake = sha1.hex(attr.id + this.password);
 		this.debug("Sending authentication token...");
+        this.debug("with id: '"+attr.id+"' and pass: '"+this.password+"'")
 		this.send("<handshake>"+handshake+"</handshake>");
 	},
 	
@@ -309,6 +314,16 @@ xmpp.StanzaBuilder = function (name, attr)
 };
 
 xmpp.StanzaBuilder.prototype = {
+    s: function (name, attr)
+    {
+		var s = new xmpp.StanzaBuilder(name, attr);
+        var parent = this;
+        parent.tags.push(s);
+        parent.children.push(s);
+		this.last_node.push(s);
+        return this
+    },
+
 	c: function (name, attr)
 	{
 		var s = new xmpp.StanzaBuilder(name, attr);
