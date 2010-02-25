@@ -62,7 +62,6 @@ xmpp.Stream = function (callbacks)
 			{
 				if(stream.opened)
 					stanza = xmpp.stanza(tagname, attr);
-                /* else if(tagname == "stream") */
 				else if(tagname == "stream" && uri == xmpp.xmlns.streams)
 				{
 					stream.opened = true;
@@ -117,9 +116,6 @@ xmpp.Connection = function (host, port)
 	this.host = host || "localhost";
 	this.port = port || 5347;
 	
-	/** this.socket = tcp.createConnection();
-    this.socket.close() **/
-	
 	this.stream = new xmpp.Stream({
 		opened: recontext(this, this._stream_opened),
 		stanza: recontext(this, this._handle_stanza),
@@ -139,16 +135,18 @@ exports.Connection.prototype = {
 		this.connect_callback = callback;
 		
 		var conn = this;
+
+        // Note that tcp.createConnection also initiates the connection.
+        // This doesn't appear to create problems with adding listeners
+        // afterward, but should be kept in mind should any arise.
         this.socket = tcp.createConnection(this.port, this.host)
+
 		this.socket.addListener("connect", recontext(this, conn._socket_connected));
 		this.socket.addListener("disconnect", recontext(this, conn._socket_disconnected));
 		this.socket.addListener("data", recontext(this, conn._socket_received));
 		
 		this.handlers = [];
 		
-		// Connect TCP socket
-		// this.socket.connect(this.port, this.host);
-	
 		this._setStatus(xmpp.Status.CONNECTING);
 	},
 	
@@ -316,6 +314,9 @@ xmpp.StanzaBuilder = function (name, attr)
 xmpp.StanzaBuilder.prototype = {
     s: function (name, attr)
     {
+        // This function was created because c() doesn't seem to work for adding
+        // multiple children on the same level with each other. This is just a
+        // quick fix mostly to get chatstates working.
 		var s = new xmpp.StanzaBuilder(name, attr);
         var parent = this;
         parent.tags.push(s);
