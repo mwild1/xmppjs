@@ -7,7 +7,7 @@
 var tcp = require("tcp");
 
 // External libs
-var xml = require("./node-xml");
+var xml = require("./node-xml/lib/node-xml");
 var sha1 = require("./sha1");
 
 // This lib

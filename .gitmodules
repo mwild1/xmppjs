@@ -1,0 +1,3 @@
+[submodule "node-xml"]
+	path = node-xml
+	url = git://github.com/robrighter/node-xml.git
