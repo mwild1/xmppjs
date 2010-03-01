@@ -26,7 +26,8 @@ component's domain, allowing you to send stanzas on behalf of any user on the se
 
 ### Getting started
 Firstly, you'll need Node installed if you haven't it already, this is fairly straightforward -
-[instructions are here](http://nodejs.org/#build).
+[instructions are here](http://nodejs.org/#build). xmpp.js is confirmed to work with version 
+0.1.30 (2010.02.22).
 
 Check out the source xmpp.js code, from either the
 [Mercurial repository](http://code.matthewwild.co.uk/xmppjs/) or
