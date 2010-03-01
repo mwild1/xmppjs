@@ -224,8 +224,10 @@ exports.Connection.prototype = {
 		this.debug("STREAM: opened.");
 		this._setStatus(xmpp.Status.AUTHENTICATING);
 		var handshake = sha1.hex(attr.id + this.password);
+		this.debug("Calculated authentication token " + handshake
+			+ " from stream id '" + attr.id
+			+ "' and password '" + this.password + "'");
 		this.debug("Sending authentication token...");
-        this.debug("with id: '"+attr.id+"' and pass: '"+this.password+"'")
 		this.send("<handshake>"+handshake+"</handshake>");
 	},
 	
