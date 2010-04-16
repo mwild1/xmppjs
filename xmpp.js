@@ -136,10 +136,12 @@ exports.Connection.prototype = {
 		
 		var conn = this;
 
-        // Note that tcp.createConnection also initiates the connection.
-        // This doesn't appear to create problems with adding listeners
-        // afterward, but should be kept in mind should any arise.
-        this.socket = tcp.createConnection(this.port, this.host)
+        	// Note that tcp.createConnection also initiates the connection.
+        	// This doesn't appear to create problems with adding listeners
+        	// afterward, but should be kept in mind should any arise.
+        	this.socket = tcp.createConnection(this.port, this.host)
+        
+        	this.socket.setTimeout(0); // Because Node's default timeout is 60s
 
 		this.socket.addListener("connect", recontext(this, conn._socket_connected));
 		this.socket.addListener("disconnect", recontext(this, conn._socket_disconnected));
