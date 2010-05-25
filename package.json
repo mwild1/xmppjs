@@ -1,5 +1,7 @@
 {
     "name": "xmppjs",
+    "version": "1.0.0",
+    "main": "./lib/xmpp",
     "description": "CommonJS module for XMPP connections.",
     "author": "Matthew Wild",
     "dependencies": [],
