@@ -1,0 +1,7 @@
+{
+    "name": "xmppjs",
+    "description": "CommonJS module for XMPP connections."
+    "author": "Matthew Wild",
+    "dependencies": [],
+    "contributors": ["Derek Hammer"]
+}
