@@ -1,0 +1,25 @@
+{
+    "name": "xmppjs",
+    "version": "1.0.0",
+    "directories": {
+      "lib": "./lib"
+    },
+    "main": "./lib/xmpp",
+    "engines": {
+      "node": ">=0.12.2"
+    },
+    "description": "Server-side CommonJS module for XMPP connections.",
+    "author": "Matthew Wild",
+    "dependencies": {
+      "node-xml" : "1.0.2"
+    },
+    "contributors": [
+      { "name" : "Derek Hammer" },
+      { "name" : "Hadrien Dorio" },
+      { "name" : "Sammy Tahtah <sammy.tahtah@gmail.com>" }
+    ],
+    "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/SammyEpitech/xmppjs.git"
+    }
+}

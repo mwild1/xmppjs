@@ -1,9 +1,7 @@
 var jid = "echo.localhost", password = "hellohello";
-var xmpp = require("../xmpp");
+var xmpp = require("../lib/xmpp");
 var conn = new xmpp.Connection();
 var sys = require("sys");
-
-conn.log = function (_, m) { sys.puts(m); };
 
 conn.connect(jid, password, function (status, condition) {
 	if(status == xmpp.Status.CONNECTED)
