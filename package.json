@@ -20,6 +20,6 @@
     ],
     "repository" : {
       "type" : "git",
-      "url" : "https://github.com/sammy44nts/xmppjs.git"
+      "url" : "https://github.com/mwild1/xmppjs.git"
     }
 }
