@@ -1,10 +1,10 @@
 # xmpp.js
 ## Server-side XMPP in Javascript
 
-[xmpp.js](http://xmppjs.prosody.im/) is a library for [Node.js](http://nodejs.org/) that allows
+xmpp.js is a library for [Node.js](http://nodejs.org/) that allows
 you to connect to an XMPP server as a component.
 
-For those already familiar with the client-side [Strophe.js](http://code.stanziq.com/strophe/)
+For those already familiar with the client-side [Strophe.js](http://strophe.im/strophejs/)
 library then there is almost nothing to learn - the API is almost exactly the same. The only
 difference is that this time you can run your code on the server, and handle XMPP traffic from
 clients on behalf of a whole domain. It's like writing an XMPP server but with the hard parts
@@ -26,8 +26,8 @@ component's domain, allowing you to send stanzas on behalf of any user on the se
 
 ### Getting started
 Firstly, you'll need Node installed if you haven't it already, this is fairly straightforward -
-[instructions are here](http://nodejs.org/#build). xmpp.js is confirmed to work with version 
-0.1.30 (2010.02.22).
+[instructions are here](https://nodejs.org/download/). xmpp.js is confirmed to work with version 
+0.12.2 (2015.04.22).
 
 Check out the source xmpp.js code, from either the
 [Mercurial repository](http://code.matthewwild.co.uk/xmppjs/) or
@@ -40,7 +40,7 @@ can simply add these lines to your Prosody config to make this example work:
 	        Component "echo.localhost"
 	                component_secret = "hellohello"
 
-Ater restarting Prosody try running:
+After restarting Prosody try running:
 
 	        node examples/echo.js
 
